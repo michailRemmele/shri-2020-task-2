@@ -20,11 +20,24 @@
     "@typescript-eslint/eslint-plugin": "^2.15.0",
     "@typescript-eslint/parser": "^2.15.0",
     "eslint": "5.16.0",
+    "husky": "^4.0.6",
+    "lint-staged": "^9.5.0",
     "path": "^0.12.7",
     "terser-webpack-plugin": "^2.3.2",
     "ts-loader": "^6.2.1",
     "typescript": "^3.7.4",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.ts": [
+      "eslint --max-warnings=0 --fix",
+      "git add"
+    ]
   }
 }
