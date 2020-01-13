@@ -1,7 +1,25 @@
-class Linter {
-  lint(json: string): string {
-    return `Hello world! JSON: ${json}`;
-  }
+export interface LocationPoint {
+  column: number;
+  lint: number;
 }
 
-export default Linter;
+export interface Location {
+  start: LocationPoint;
+  end: LocationPoint;
+}
+
+export interface Error {
+  code: string;
+  error: string;
+  location: Location;
+}
+
+export default class Linter {
+  /*
+  * TODO::remove eslint disable when lint function will be done
+  */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  lint(json: string): Error[] {
+    return [];
+  }
+}
