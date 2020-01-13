@@ -18,6 +18,10 @@
     "url": "https://github.com/michailRemmele/shri-2020-task-2/issues"
   },
   "homepage": "https://github.com/michailRemmele/shri-2020-task-2#readme",
+  "dependencies": {
+    "@types/json-to-ast": "^2.1.0",
+    "json-to-ast": "^2.1.0"
+  },
   "devDependencies": {
     "@types/jest": "^24.0.25",
     "@typescript-eslint/eslint-plugin": "^2.15.0",
