@@ -1,16 +1,11 @@
 import {
-  AST, ASTArray, ASTLocation, ASTObject,
+  AST, ASTArray, ASTObject,
 } from 'src/astBuilder/astBuilder';
-import BemEntityBuilder from 'src/bemEntityBuilder/bemEntityBuilder';
+import BemEntityBuilder, { BemEntity } from 'src/bemEntityBuilder/bemEntityBuilder';
 
 export interface Event {
   type: 'enter' | 'leave';
-  target: EventTarget;
-}
-
-export interface EventTarget {
-  name: string;
-  location: ASTLocation;
+  target: BemEntity;
 }
 
 export interface TreeExplorerListener {
@@ -39,12 +34,15 @@ export default class TreeExplorer {
   enter(ast: AST): void {
     const enterStrategyMap = {
       Object: (astObject: ASTObject): void => {
-        const { name, location, content } = this._bemEntityBuilder.build(astObject);
-        const target = { name, location };
+        const bemEntity = this._bemEntityBuilder.build(astObject);
 
-        this._fireEvent({ type: 'enter', target });
-        this.enter(content);
-        this._fireEvent({ type: 'leave', target });
+        this._fireEvent({ type: 'enter', target: bemEntity });
+
+        if (bemEntity.content) {
+          this.enter(bemEntity.content);
+        }
+
+        this._fireEvent({ type: 'leave', target: bemEntity });
       },
       Array: (astArray: ASTArray): void => {
         astArray.children.forEach((child: AST) => {
