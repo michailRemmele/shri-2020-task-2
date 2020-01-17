@@ -5,7 +5,7 @@ import parse, {
   Position,
 } from 'json-to-ast';
 
-export type AST = ObjectNode | ArrayNode | LiteralNode;
+export type AST = ASTObject | ASTArray | ASTLiteral;
 
 export interface ASTObject extends ObjectNode {
   type: 'Object';
@@ -16,7 +16,7 @@ export interface ASTObject extends ObjectNode {
 export interface ASTProperty extends PropertyNode {
   type: 'Property';
   key: ASTIdentifier;
-  value: ASTObject | ASTArray | ASTLiteral;
+  value: AST;
   loc: ASTLocation;
 }
 
@@ -52,6 +52,6 @@ export interface ASTPosition extends Position {
 
 export default class ASTBuilder {
   build(json: string): AST {
-    return parse(json);
+    return parse(json) as AST;
   }
 }

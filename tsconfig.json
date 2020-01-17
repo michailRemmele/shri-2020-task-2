@@ -6,6 +6,10 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "target": "es6",
-    "esModuleInterop": true
-  }
+    "esModuleInterop": true,
+    "baseUrl": "."
+  },
+  "include": [
+    "src"
+  ]
 }

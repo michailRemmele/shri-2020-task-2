@@ -1,4 +1,5 @@
 import ASTBuilder from '../astBuilder/astBuilder';
+import TreeExplorer from '../treeExplorer/treeExplorer';
 
 export interface LocationPoint {
   column: number;
@@ -18,17 +19,16 @@ export interface Error {
 
 export default class Linter {
   private _astBuilder: ASTBuilder;
+  private _treeExplorer: TreeExplorer;
 
   constructor() {
     this._astBuilder = new ASTBuilder();
+    this._treeExplorer = new TreeExplorer();
   }
 
-  /*
-  * TODO::remove eslint disable when lint function will be done
-  */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   lint(json: string): Error[] {
-    // const ast = this._astBuilder.build(json);
+    const ast = this._astBuilder.build(json);
+    this._treeExplorer.enter(ast);
 
     return [];
   }

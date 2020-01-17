@@ -9,11 +9,15 @@
   "parserOptions": {
     "project": "./tsconfig.json",
     "ecmaVersion": 6,
-    "sourceType":  "module"
+    "sourceType":  "module",
+    "createDefaultProgram": true
   },
   "rules": {
     "class-methods-use-this": 0,
-    "no-underscore-dangle": 0
+    "no-underscore-dangle": 0,
+    "lines-between-class-members": 0,
+    "no-param-reassign": 0,
+    "@typescript-eslint/no-explicit-any": 0
   },
   "env": {
     "browser": true,
@@ -22,5 +26,10 @@
   },
   "globals": {
     "window": true
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
   }
 }
