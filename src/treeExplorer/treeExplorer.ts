@@ -1,7 +1,7 @@
 import {
   AST, ASTArray, ASTLocation, ASTObject,
 } from 'src/astBuilder/astBuilder';
-import BemEntityBuilder from './bemEntityBuilder/bemEntityBuilder';
+import BemEntityBuilder from 'src/bemEntityBuilder/bemEntityBuilder';
 
 export interface Event {
   type: 'enter' | 'leave';
