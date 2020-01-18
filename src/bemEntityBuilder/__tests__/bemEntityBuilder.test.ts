@@ -2,6 +2,7 @@ import {
   ASTArray,
   ASTLocation, ASTObject,
 } from 'src/astBuilder/astBuilder';
+import Location from 'src/location';
 import BemEntityBuilder, { BemEntity } from '../bemEntityBuilder';
 
 describe('Bem entity builder', () => {
@@ -23,7 +24,7 @@ describe('Bem entity builder', () => {
       name: '',
       elemMods: {},
       mix: [],
-      location: astLocation,
+      location: new Location(astLocation),
     };
 
     expect(bemEntityBuilder.build(astObject)).toEqual(expectedResult);
@@ -115,7 +116,7 @@ describe('Bem entity builder', () => {
         'space-a': 'xxl',
       },
       mix: [],
-      location: astLocation,
+      location: new Location(astLocation),
     };
 
     expect(bemEntityBuilder.build(astObject)).toEqual(expectedResult);
@@ -192,10 +193,10 @@ describe('Bem entity builder', () => {
           name: '',
           elemMods: {},
           mix: [],
-          location: astLocation,
+          location: new Location(astLocation),
         },
       ],
-      location: astLocation,
+      location: new Location(astLocation),
     };
 
     expect(bemEntityBuilder.build(astObject)).toEqual(expectedResult);
@@ -261,7 +262,7 @@ describe('Bem entity builder', () => {
       elemMods: {},
       mix: [],
       content: astArray,
-      location: astLocation,
+      location: new Location(astLocation),
     };
 
     expect(bemEntityBuilder.build(astObject)).toEqual(expectedResult);
