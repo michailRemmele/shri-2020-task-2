@@ -22,11 +22,12 @@ export default class ValidationState implements State {
       return [];
     }
 
-    if (target.name !== block) {
+    if (target.name !== block || type !== 'enter') {
       return [];
     }
 
     if (!target.elemMods[mod] || target.elemMods[mod] !== modValue) {
+      this._rule.abort();
       return [this._rule.generateError()];
     }
 

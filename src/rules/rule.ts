@@ -37,7 +37,7 @@ export default abstract class Rule {
       throw new Error(`No state found with this name: ${name}`);
     }
 
-    this.state = new this.states[name]();
+    this.state = new this.states[name](this, this.context);
   }
 
   generateError(): Error {
@@ -56,5 +56,11 @@ export default abstract class Rule {
     this._isAborted = true;
   }
 
-  abstract process(event: Event): Error[];
+  process(event: Event): Error[] {
+    if (this._isAborted) {
+      return [];
+    }
+
+    return this.state.process(event);
+  }
 }

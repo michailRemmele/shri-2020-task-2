@@ -1,5 +1,4 @@
-import { Event } from 'src/treeExplorer/treeExplorer';
-import Rule, { Error } from '../rule';
+import Rule from '../rule';
 import Context from './context';
 
 import states from './states';
@@ -15,9 +14,5 @@ export default class ModEqualityCheckRule extends Rule {
     this.context.mod = context.mod;
     this.states = states;
     this.state = new ListeningState(this, this.context);
-  }
-
-  process(event: Event): Error[] {
-    return this.state.process(event);
   }
 }
