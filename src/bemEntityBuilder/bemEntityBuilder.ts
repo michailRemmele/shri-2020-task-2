@@ -1,9 +1,10 @@
 import {
-  ASTObject, ASTArray, ASTLocation, ASTProperty,
+  ASTObject, ASTArray, ASTProperty,
 } from 'src/astBuilder/astBuilder';
 import LiteralExtractStrategy from 'src/astPropertyExtractStrategy/literalExtractStrategy';
 import LiteralMapExtractStrategy from 'src/astPropertyExtractStrategy/literalMapExtractStrategy';
 import ASTExtractStrategy from 'src/astPropertyExtractStrategy/astExtractStrategy';
+import Location from 'src/location';
 
 interface ExtractStrategyMap {
   ast?: ASTExtractStrategy;
@@ -37,7 +38,7 @@ export interface BemEntity {
   elemMods: object;
   mix: BemEntity[];
   content?: ASTObject | ASTArray;
-  location: ASTLocation;
+  location: Location;
 }
 
 export default class BemEntityBuilder {
@@ -108,7 +109,7 @@ export default class BemEntityBuilder {
       name: (raw.elem.length) ? `${raw.block}__${raw.elem}` : raw.block,
       elemMods: raw.elemMods,
       mix: raw.mix,
-      location: astObject.loc,
+      location: new Location(astObject.loc),
     };
 
     if (raw.content) {
