@@ -41,5 +41,16 @@
       "errorCode": "WARNING.INVALID_PLACEHOLDER_SIZE",
       "errorText": "Allowed sizes of placeholder block in warning block: s, m, l"
     }
+  },
+  {
+    "name": "uniquenessCheckRule",
+    "config": {
+      "entryPoint": "_root",
+      "block": "text",
+      "mod": "type",
+      "modValue": "h1",
+      "errorCode": "TEXT.SEVERAL_H1",
+      "errorText": "H1 should be uniqueness"
+    }
   }
 ]

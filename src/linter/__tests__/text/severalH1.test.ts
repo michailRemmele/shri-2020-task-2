@@ -24,10 +24,12 @@ const incorrectJson = `[
 
 describe('Lint: TEXT.SEVERAL_H1', () => {
   const config = {
-    name: 'orderValidationRule',
+    name: 'uniquenessCheckRule',
     config: {
       entryPoint: '_root',
-      block: 'h1',
+      block: 'text',
+      mod: 'type',
+      modValue: 'h1',
       errorCode: 'TEXT.SEVERAL_H1',
       errorText: 'H1 should be uniqueness',
     },
@@ -47,8 +49,8 @@ describe('Lint: TEXT.SEVERAL_H1', () => {
         code: 'TEXT.SEVERAL_H1',
         error: 'H1 should be uniqueness',
         location: {
-          start: { column: 1, line: 1 },
-          end: { column: 2, line: 10 },
+          start: { column: 3, line: 6 },
+          end: { column: 4, line: 9 },
         },
       },
     ];
