@@ -1,0 +1,55 @@
+{
+  "name": "shri-2020-task-2",
+  "version": "1.0.0",
+  "description": "Implementation of Yandex SHRI 2020 linter for task 2",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "lint": "eslint 'src/**/*.ts'",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michailRemmele/shri-2020-task-2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/michailRemmele/shri-2020-task-2/issues"
+  },
+  "homepage": "https://github.com/michailRemmele/shri-2020-task-2#readme",
+  "dependencies": {
+    "@types/json-to-ast": "^2.1.0",
+    "json-to-ast": "^2.1.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.25",
+    "@typescript-eslint/eslint-plugin": "^2.15.0",
+    "@typescript-eslint/parser": "^2.15.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-typescript": "^6.3.1",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-import": "^2.20.0",
+    "husky": "^4.0.6",
+    "jest": "^24.9.0",
+    "lint-staged": "^9.5.0",
+    "path": "^0.12.7",
+    "terser-webpack-plugin": "^2.3.2",
+    "ts-jest": "^24.3.0",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.4",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.ts": [
+      "eslint --max-warnings=0 --fix",
+      "git add"
+    ]
+  }
+}

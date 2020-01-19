@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "outDir": "./build/",
+    "noImplicitAny": false,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "target": "es6",
+    "esModuleInterop": true,
+    "baseUrl": "."
+  },
+  "include": [
+    "src"
+  ]
+}
