@@ -44,8 +44,8 @@ describe('Lint: WARNING.INVALID_BUTTON_SIZE', () => {
         code: 'WARNING.INVALID_BUTTON_SIZE',
         error: 'Size of button in warning block should be one step larger than standard',
         location: {
-          start: { column: 1, line: 1 },
-          end: { column: 2, line: 7 },
+          start: { column: 7, line: 5 },
+          end: { column: 53, line: 5 },
         },
       },
     ];

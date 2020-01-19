@@ -8,5 +8,17 @@
       "errorCode": "WARNING.TEXT_SIZES_SHOULD_BE_EQUAL",
       "errorText": "Texts sizes in warning block should be equals"
     }
+  },
+  {
+    "name": "modGrowthCheckRule",
+    "config": {
+      "entryPoint": "warning",
+      "block": "button",
+      "standard": "text",
+      "mod": "size",
+      "modValues": ["xxxs", "xxs", "xs", "s", "m", "l", "xl", "xxl", "xxxl", "xxxxl", "xxxxxl"],
+      "errorCode": "WARNING.INVALID_BUTTON_SIZE",
+      "errorText": "Size of button in warning block should be one step larger than standard"
+    }
   }
 ]
