@@ -41,7 +41,7 @@ export default abstract class Rule {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  generateError(args: any): Error {
+  generateError(args?: any): Error {
     return {
       code: this.context.errorCode,
       error: this.context.errorText,

@@ -30,5 +30,16 @@
       "errorCode": "WARNING.INVALID_BUTTON_POSITION",
       "errorText": "Button in warning block can\\'t be before than placeholder"
     }
+  },
+  {
+    "name": "modValidationRule",
+    "config": {
+      "entryPoint": "warning",
+      "block": "placeholder",
+      "mod": "size",
+      "allowedModValues": ["s", "m", "l"],
+      "errorCode": "WARNING.INVALID_PLACEHOLDER_SIZE",
+      "errorText": "Allowed sizes of placeholder block in warning block: s, m, l"
+    }
   }
 ]
