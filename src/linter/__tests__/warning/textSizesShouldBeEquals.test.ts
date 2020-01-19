@@ -1,44 +1,53 @@
 import Linter from '../../linter';
 
-const correctJson = `
-{
+const correctJson = `{
   "block": "warning",
   "content": [
       { "block": "text", "mods": { "size": "l" } },
       { "block": "text", "mods": { "size": "l" } }
   ]
-}
-`;
+}`;
 
-const incorrectJson = `
-{
+const incorrectJson = `{
   "block": "warning",
   "content": [
       { "block": "text", "mods": { "size": "l" } },
       { "block": "text", "mods": { "size": "m" } }
   ]
-}
-`;
+}`;
 
-it('WARNING.TEXT_SIZES_SHOULD_BE_EQUAL rule should passed', () => {
-  const linter = new Linter();
-
-  expect(linter.lint(correctJson)).toEqual([]);
-});
-
-it('WARNING.TEXT_SIZES_SHOULD_BE_EQUAL rule should failed', () => {
-  const linter = new Linter();
-
-  const expectedResult = [
-    {
-      code: 'WARNING.TEXT_SIZES_SHOULD_BE_EQUAL',
-      error: 'Тексты в блоке warning должны быть одного размера',
-      location: {
-        start: { column: 1, line: 1 },
-        end: { column: 2, line: 7 },
-      },
+describe('Lint: WARNING.TEXT_SIZES_SHOULD_BE_EQUAL', () => {
+  const config = {
+    name: 'modEqualityCheckRule',
+    config: {
+      entryPoint: 'warning',
+      block: 'text',
+      mod: 'size',
+      errorCode: 'WARNING.TEXT_SIZES_SHOULD_BE_EQUAL',
+      errorText: 'Texts sizes in warning block should be equals',
     },
-  ];
+  };
 
-  expect(linter.lint(incorrectJson)).toEqual(expectedResult);
+  it('Rule should pass', () => {
+    const linter = new Linter([config]);
+
+    expect(linter.lint(correctJson)).toEqual([]);
+  });
+
+  it('Rule should fail', () => {
+    const linter = new Linter([config]);
+
+    const expectedResult = [
+      {
+        code: 'WARNING.TEXT_SIZES_SHOULD_BE_EQUAL',
+        error: 'Texts sizes in warning block should be equals',
+        location: {
+          start: { column: 1, line: 1 },
+          end: { column: 2, line: 7 },
+        },
+      },
+    ];
+
+    expect(linter.lint(incorrectJson)).toEqual(expectedResult);
+  });
 });

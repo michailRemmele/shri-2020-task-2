@@ -1,7 +1,6 @@
 import Linter from '../../linter';
 
-const correctJson = `
-{
+const correctJson = `{
   "block": "grid",
   "mods": {
       "m-columns": "10"
@@ -32,11 +31,9 @@ const correctJson = `
           ]
       }
   ]
-}
-`;
+}`;
 
-const incorrectJson = `
-{
+const incorrectJson = `{
   "block": "grid",
   "mods": {
       "m-columns": "10"
@@ -67,28 +64,41 @@ const incorrectJson = `
           ]
       }
   ]
-}
-`;
+}`;
 
-it('GRID.TOO_MUCH_MARKETING_BLOCKS rule should passed', () => {
-  const linter = new Linter();
-
-  expect(linter.lint(correctJson)).toEqual([]);
-});
-
-it('GRID.TOO_MUCH_MARKETING_BLOCKS rule should failed', () => {
-  const linter = new Linter();
-
-  const expectedResult = [
-    {
-      code: 'GRID.TOO_MUCH_MARKETING_BLOCKS',
-      error: 'Маркетинговые блоки занимают больше половины от всех колонок блока grid',
-      location: {
-        start: { column: 1, line: 1 },
-        end: { column: 2, line: 32 },
-      },
+describe('Lint: GRID.TOO_MUCH_MARKETING_BLOCKS', () => {
+  const config = {
+    name: 'groupProportionsCheckRule',
+    config: {
+      entryPoint: 'grid',
+      block: 'grid__fraction',
+      firstGroup: ['payment', 'warning', 'product', 'history', 'cover', 'collect', 'articles', 'subscription', 'event'],
+      secondGroup: ['commercial', 'offer'],
+      errorCode: 'GRID.TOO_MUCH_MARKETING_BLOCKS',
+      errorText: 'Marketing blocks takes more than half from all grid columns',
     },
-  ];
+  };
 
-  expect(linter.lint(incorrectJson)).toEqual(expectedResult);
+  it('Rule should pass', () => {
+    const linter = new Linter([config]);
+
+    expect(linter.lint(correctJson)).toEqual([]);
+  });
+
+  it('Rule should fail', () => {
+    const linter = new Linter([config]);
+
+    const expectedResult = [
+      {
+        code: 'GRID.TOO_MUCH_MARKETING_BLOCKS',
+        error: 'Marketing blocks takes more than half from all grid columns',
+        location: {
+          start: { column: 1, line: 1 },
+          end: { column: 2, line: 32 },
+        },
+      },
+    ];
+
+    expect(linter.lint(incorrectJson)).toEqual(expectedResult);
+  });
 });

@@ -21,6 +21,7 @@ interface RawEntityFieldMap {
   block: RawEntityField;
   elem: RawEntityField;
   elemMods: RawEntityField;
+  mods: RawEntityField;
   mix: RawEntityField;
   content: RawEntityField;
 }
@@ -29,13 +30,14 @@ interface RawEntity {
   block: string;
   elem: string;
   elemMods: object;
+  mods: object;
   mix: BemEntity[];
   content?: ASTObject | ASTArray;
 }
 
 export interface BemEntity {
   name: string;
-  elemMods: object;
+  mods: object;
   mix: BemEntity[];
   content?: ASTObject | ASTArray;
   location: Location;
@@ -53,40 +55,50 @@ export default class BemEntityBuilder {
     };
     this._rawEntityFieldMap = {
       block: {
-        getValue: (property: ASTProperty): any => (
-          this._extractStrategyMap.literal.execute(property)
-        ),
+        getValue: (property: ASTProperty): void => this._getString(property),
         default: '',
       },
       elem: {
-        getValue: (property: ASTProperty): any => (
-          this._extractStrategyMap.literal.execute(property)
-        ),
+        getValue: (property: ASTProperty): void => this._getString(property),
         default: '',
       },
       elemMods: {
-        getValue: (property: ASTProperty): any => (
-          this._extractStrategyMap.literalMap.execute(property)
-        ),
+        getValue: (property: ASTProperty): void => this._getMods(property),
+        default: {},
+      },
+      mods: {
+        getValue: (property: ASTProperty): void => this._getMods(property),
         default: {},
       },
       mix: {
-        getValue: (astProperty: ASTProperty): BemEntity[] => {
-          const ast = this._extractStrategyMap.ast.execute(astProperty);
-
-          if (ast.type === 'Object') {
-            return [this.build(ast)];
-          }
-          return ast.children.map((child: ASTObject) => this.build(child));
-        },
+        getValue: (property: ASTProperty): void => this._getMix(property),
         default: [],
       },
       content: {
-        getValue: (property: ASTProperty): any => (
-          this._extractStrategyMap.ast.execute(property)
-        ),
+        getValue: (property: ASTProperty): void => this._getAst(property),
       },
     };
+  }
+
+  _getString(property: ASTProperty): any {
+    return this._extractStrategyMap.literal.execute(property);
+  }
+
+  _getMods(property: ASTProperty): any {
+    return this._extractStrategyMap.literalMap.execute(property);
+  }
+
+  _getMix(property: ASTProperty): any {
+    const ast = this._extractStrategyMap.ast.execute(property);
+
+    if (ast.type === 'Object') {
+      return [this.build(ast)];
+    }
+    return ast.children.map((child: ASTObject) => this.build(child));
+  }
+
+  _getAst(property: ASTProperty): any {
+    return this._extractStrategyMap.ast.execute(property);
   }
 
   build(astObject: ASTObject): BemEntity {
@@ -102,12 +114,13 @@ export default class BemEntityBuilder {
       block: this._rawEntityFieldMap.block.default,
       elem: this._rawEntityFieldMap.elem.default,
       elemMods: this._rawEntityFieldMap.elemMods.default,
+      mods: this._rawEntityFieldMap.mods.default,
       mix: this._rawEntityFieldMap.mix.default,
     });
 
     const bemEntity: BemEntity = {
       name: (raw.elem.length) ? `${raw.block}__${raw.elem}` : raw.block,
-      elemMods: raw.elemMods,
+      mods: (raw.elem.length) ? raw.elemMods : raw.mods,
       mix: raw.mix,
       location: new Location(astObject.loc),
     };

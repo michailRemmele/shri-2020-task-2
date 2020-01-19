@@ -1,44 +1,53 @@
 import Linter from '../../linter';
 
-const correctJson = `
-{
+const correctJson = `{
   "block": "warning",
   "content": [
       { "block": "placeholder", "mods": { "size": "m" } },
       { "block": "button", "mods": { "size": "m" } }
   ]
-}
-`;
+}`;
 
-const incorrectJson = `
-{
+const incorrectJson = `{
   "block": "warning",
   "content": [
       { "block": "button", "mods": { "size": "m" } },
       { "block": "placeholder", "mods": { "size": "m" } }
   ]
-}
-`;
+}`;
 
-it('WARNING.INVALID_BUTTON_POSITION rule should passed', () => {
-  const linter = new Linter();
-
-  expect(linter.lint(correctJson)).toEqual([]);
-});
-
-it('WARNING.INVALID_BUTTON_POSITION rule should failed', () => {
-  const linter = new Linter();
-
-  const expectedResult = [
-    {
-      code: 'WARNING.INVALID_BUTTON_POSITION',
-      error: 'Блок button в блоке warning не может находиться перед блоком placeholder на том же или более глубоком уровне вложенности',
-      location: {
-        start: { column: 1, line: 1 },
-        end: { column: 2, line: 7 },
-      },
+describe('Lint: WARNING.INVALID_BUTTON_POSITION', () => {
+  const config = {
+    name: 'orderValidationRule',
+    config: {
+      entryPoint: 'warning',
+      block: 'button',
+      after: 'placeholder',
+      errorCode: 'WARNING.INVALID_BUTTON_POSITION',
+      errorText: 'Button in warning block can\'t be before than placeholder',
     },
-  ];
+  };
 
-  expect(linter.lint(incorrectJson)).toEqual(expectedResult);
+  it('Rule should pass', () => {
+    const linter = new Linter([config]);
+
+    expect(linter.lint(correctJson)).toEqual([]);
+  });
+
+  it('Rule should fail', () => {
+    const linter = new Linter([config]);
+
+    const expectedResult = [
+      {
+        code: 'WARNING.INVALID_BUTTON_POSITION',
+        error: 'Button in warning block can\'t be before than placeholder',
+        location: {
+          start: { column: 1, line: 1 },
+          end: { column: 2, line: 7 },
+        },
+      },
+    ];
+
+    expect(linter.lint(incorrectJson)).toEqual(expectedResult);
+  });
 });

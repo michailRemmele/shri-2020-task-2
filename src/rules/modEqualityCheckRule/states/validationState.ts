@@ -26,7 +26,7 @@ export default class ValidationState implements State {
       return [];
     }
 
-    if (!target.elemMods[mod] || target.elemMods[mod] !== modValue) {
+    if (!target.mods[mod] || target.mods[mod] !== modValue) {
       this._rule.abort();
       return [this._rule.generateError()];
     }

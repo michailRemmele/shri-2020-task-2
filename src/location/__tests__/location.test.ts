@@ -2,6 +2,22 @@ import { ASTLocation } from 'src/astBuilder/astBuilder';
 import Location from '../index';
 
 describe('Location', () => {
+  it('Should equals to json', () => {
+    const astLocation1: ASTLocation = {
+      start: { line: 5, column: 10, offset: 43 },
+      end: { line: 8, column: 2, offset: 30 },
+      source: null,
+    };
+
+    const location = new Location(astLocation1);
+    const expectedResult = {
+      start: { line: 5, column: 10 },
+      end: { line: 8, column: 2 },
+    };
+
+    expect(location).toEqual(expectedResult);
+  });
+
   it('Should equals', () => {
     const astLocation1: ASTLocation = {
       start: { line: 5, column: 10, offset: 43 },
