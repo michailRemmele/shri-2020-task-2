@@ -13,7 +13,7 @@ export default class ValidationState implements State {
 
   process(event: Event): Error[] {
     const {
-      block, after, buttons, entryPoint, entryPointLoc,
+      block, mod, modValue, after, afterMod, afterModValue, buttons, entryPoint, entryPointLoc,
     } = this._context;
     const { type, target, original } = event;
 
@@ -22,12 +22,20 @@ export default class ValidationState implements State {
       return [];
     }
 
-    if (target.name === block && type === 'enter') {
+    if (
+      target.name === block
+      && type === 'enter'
+      && (!mod || !modValue || (target.mods[mod] && target.mods[mod] === modValue))
+    ) {
       buttons.push(target);
       return [];
     }
 
-    if (target.name === after && type === 'enter') {
+    if (
+      target.name === after
+      && type === 'enter'
+      && (!mod || !modValue || (target.mods[afterMod] && target.mods[afterMod] === afterModValue))
+    ) {
       this._rule.changeState('listening');
       this._context.buttons = [];
       return buttons.map((entity) => this._rule.generateError({ entity }));

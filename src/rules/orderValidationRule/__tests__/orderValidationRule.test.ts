@@ -20,10 +20,12 @@ describe('Order validation rule', () => {
     errorText: 'Button in warning block can\'t be before than placeholder',
   };
 
-  const getEvent = (type, block, loc?): Event => {
+  const getEvent = (type, block, mod?, modValue?, loc?): Event => {
     const entity = {
       name: block,
-      mods: {},
+      mods: {
+        ...(mod ? { [mod]: modValue } : {}),
+      },
       mix: [],
       location: loc || location,
     };
@@ -184,6 +186,104 @@ describe('Order validation rule', () => {
       {
         code: 'WARNING.INVALID_BUTTON_POSITION',
         error: 'Button in warning block can\'t be before than placeholder',
+        location,
+      },
+    ];
+
+    expect(errors).toEqual(expectedResult);
+  });
+
+  const textRuleContext: Context = {
+    entryPoint: '_root',
+    entryPointLoc: location,
+    block: 'text',
+    mod: 'type',
+    modValue: 'h2',
+    after: 'text',
+    afterMod: 'type',
+    afterModValue: 'h1',
+    errorCode: 'TEXT.INVALID_H2_POSITION',
+    errorText: 'H2 can\'t be before than h1',
+  };
+
+  it('Should pass without errors: h2 after h1', () => {
+    const rule = new Rule(textRuleContext);
+
+    const events: Event[] = [
+      getEvent('enter', '_root'),
+      getEvent('enter', 'text', 'type', 'h1'),
+      getEvent('leave', 'text', 'type', 'h1'),
+      getEvent('enter', 'text', 'type', 'h2'),
+      getEvent('leave', 'text', 'type', 'h2'),
+      getEvent('leave', '_root'),
+    ];
+
+    const errors: Error[] = events.reduce((array: Error[], event: Event) => {
+      array = array.concat(rule.process(event));
+      return array;
+    }, []);
+
+    const expectedResult = [];
+
+    expect(errors).toEqual(expectedResult);
+  });
+
+  it('Should generate one error: h2 before h1', () => {
+    const rule = new Rule(textRuleContext);
+
+    const events: Event[] = [
+      getEvent('enter', '_root'),
+      getEvent('enter', 'text', 'type', 'h2'),
+      getEvent('leave', 'text', 'type', 'h2'),
+      getEvent('enter', 'text', 'type', 'h1'),
+      getEvent('leave', 'text', 'type', 'h1'),
+      getEvent('leave', '_root'),
+    ];
+
+    const errors: Error[] = events.reduce((array: Error[], event: Event) => {
+      array = array.concat(rule.process(event));
+      return array;
+    }, []);
+
+    const expectedResult = [
+      {
+        code: 'TEXT.INVALID_H2_POSITION',
+        error: 'H2 can\'t be before than h1',
+        location,
+      },
+    ];
+
+    expect(errors).toEqual(expectedResult);
+  });
+
+  it('Should generate two errors: multiple h2 before h1', () => {
+    const rule = new Rule(textRuleContext);
+
+    const events: Event[] = [
+      getEvent('enter', '_root'),
+      getEvent('enter', 'text', 'type', 'h2'),
+      getEvent('leave', 'text', 'type', 'h2'),
+      getEvent('enter', 'text', 'type', 'h2'),
+      getEvent('leave', 'text', 'type', 'h2'),
+      getEvent('enter', 'text', 'type', 'h1'),
+      getEvent('leave', 'text', 'type', 'h1'),
+      getEvent('leave', '_root'),
+    ];
+
+    const errors: Error[] = events.reduce((array: Error[], event: Event) => {
+      array = array.concat(rule.process(event));
+      return array;
+    }, []);
+
+    const expectedResult = [
+      {
+        code: 'TEXT.INVALID_H2_POSITION',
+        error: 'H2 can\'t be before than h1',
+        location,
+      },
+      {
+        code: 'TEXT.INVALID_H2_POSITION',
+        error: 'H2 can\'t be before than h1',
         location,
       },
     ];

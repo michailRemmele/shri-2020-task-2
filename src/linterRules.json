@@ -54,6 +54,34 @@
     }
   },
   {
+    "name": "orderValidationRule",
+    "config": {
+      "entryPoint": "_root",
+      "block": "text",
+      "mod": "type",
+      "modValue": "h2",
+      "after": "text",
+      "afterMod": "type",
+      "afterModValue": "h1",
+      "errorCode": "TEXT.INVALID_H2_POSITION",
+      "errorText": "H2 can't be before than h1"
+    }
+  },
+  {
+    "name": "orderValidationRule",
+    "config": {
+      "entryPoint": "_root",
+      "block": "text",
+      "mod": "type",
+      "modValue": "h3",
+      "after": "text",
+      "afterMod": "type",
+      "afterModValue": "h2",
+      "errorCode": "TEXT.INVALID_H3_POSITION",
+      "errorText": "H3 can't be before than h2"
+    }
+  },
+  {
     "name": "groupProportionsCheckRule",
     "config": {
       "entryPoint": "grid",

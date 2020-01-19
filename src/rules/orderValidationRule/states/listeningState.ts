@@ -13,7 +13,7 @@ export default class ListeningState implements State {
 
   process(event: Event): Error[] {
     const {
-      block, entryPoint, entryPointLoc, buttons,
+      block, mod, modValue, entryPoint, entryPointLoc, buttons,
     } = this._context;
     const { type, target, original } = event;
 
@@ -22,7 +22,11 @@ export default class ListeningState implements State {
       return [];
     }
 
-    if (target.name === block && type === 'enter') {
+    if (target.name !== block || type !== 'enter') {
+      return [];
+    }
+
+    if (!mod || !modValue || (target.mods[mod] && target.mods[mod] === modValue)) {
       buttons.push(target);
       this._rule.changeState('validation');
       return [];

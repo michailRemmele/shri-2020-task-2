@@ -12,6 +12,8 @@ export default class OrderValidationRule extends Rule {
     super(context);
 
     this.context.after = context.after;
+    this.context.mod = context.mod;
+    this.context.modValue = context.modValue;
     this.context.buttons = [];
     this.states = states;
     this.state = new ListeningState(this, this.context);
