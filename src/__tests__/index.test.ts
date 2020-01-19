@@ -32,38 +32,47 @@ const invalidPlaceholderSize = `{
   ]
 }`;
 
-const severalH1 = `[
-  {
-      "block": "text",
-      "mods": { "type": "h1" }
-  },
-  {
-      "block": "text",
-      "mods": { "type": "h1" }
-  }
-]`;
+const severalH1 = `{
+  "block": "page",
+  "content": [
+      {
+          "block": "text",
+          "mods": { "type": "h1" }
+      },
+      {
+          "block": "text",
+          "mods": { "type": "h1" }
+      }
+  ]
+}`;
 
-const invalidH2Position = `[
-  {
-      "block": "text",
-      "mods": { "type": "h2" }
-  },
-  {
-      "block": "text",
-      "mods": { "type": "h1" }
-  }
-]`;
+const invalidH2Position = `{
+  "block": "page",
+  "content": [
+      {
+          "block": "text",
+          "mods": { "type": "h2" }
+      },
+      {
+          "block": "text",
+          "mods": { "type": "h1" }
+      }
+  ]
+}`;
 
-const invalidH3Position = `[
-  {
-      "block": "text",
-      "mods": { "type": "h3" }
-  },
-  {
-      "block": "text",
-      "mods": { "type": "h2" }
-  }
-]`;
+const invalidH3Position = `{
+  "block": "page",
+  "content": [
+      {
+          "block": "text",
+          "mods": { "type": "h3" }
+      },
+      {
+          "block": "text",
+          "mods": { "type": "h2" }
+      }
+  ]
+}`;
 
 const tooMuchMarketingBlocks = `{
   "block": "grid",
@@ -163,8 +172,8 @@ describe('Lint main function', () => {
         code: 'TEXT.SEVERAL_H1',
         error: 'H1 should be uniqueness',
         location: {
-          start: { column: 3, line: 6 },
-          end: { column: 4, line: 9 },
+          start: { column: 7, line: 8 },
+          end: { column: 8, line: 11 },
         },
       },
     ];
@@ -178,8 +187,8 @@ describe('Lint main function', () => {
         code: 'TEXT.INVALID_H2_POSITION',
         error: 'H2 can\'t be before than h1',
         location: {
-          start: { column: 3, line: 2 },
-          end: { column: 4, line: 5 },
+          start: { column: 7, line: 4 },
+          end: { column: 8, line: 7 },
         },
       },
     ];
@@ -193,8 +202,8 @@ describe('Lint main function', () => {
         code: 'TEXT.INVALID_H3_POSITION',
         error: 'H3 can\'t be before than h2',
         location: {
-          start: { column: 3, line: 2 },
-          end: { column: 4, line: 5 },
+          start: { column: 7, line: 4 },
+          end: { column: 8, line: 7 },
         },
       },
     ];

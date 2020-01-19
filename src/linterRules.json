@@ -45,7 +45,7 @@
   {
     "name": "uniquenessCheckRule",
     "config": {
-      "entryPoint": "_root",
+      "entryPoint": "page",
       "block": "text",
       "mod": "type",
       "modValue": "h1",
@@ -56,7 +56,7 @@
   {
     "name": "orderValidationRule",
     "config": {
-      "entryPoint": "_root",
+      "entryPoint": "page",
       "block": "text",
       "mod": "type",
       "modValue": "h2",
@@ -70,7 +70,7 @@
   {
     "name": "orderValidationRule",
     "config": {
-      "entryPoint": "_root",
+      "entryPoint": "page",
       "block": "text",
       "mod": "type",
       "modValue": "h3",
