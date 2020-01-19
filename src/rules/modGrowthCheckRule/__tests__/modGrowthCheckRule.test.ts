@@ -102,7 +102,7 @@ describe('Mod growth check rule', () => {
     expect(errors).toEqual(expectedResult);
   });
 
-  it('Should generate one error: button\'s size is undefined', () => {
+  it('Should pass without errors: button\'s size is undefined', () => {
     const rule = new Rule(context);
 
     const events: Event[] = [
@@ -117,13 +117,7 @@ describe('Mod growth check rule', () => {
       return array;
     }, []);
 
-    const expectedResult = [
-      {
-        code: 'WARNING.INVALID_BUTTON_SIZE',
-        error: 'Size of button in warning block should be one step larger than standard',
-        location,
-      },
-    ];
+    const expectedResult = [];
 
     expect(errors).toEqual(expectedResult);
   });
