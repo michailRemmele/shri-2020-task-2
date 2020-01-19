@@ -1,44 +1,55 @@
 import Linter from '../../linter';
 
-const correctJson = `
-{
+const correctJson = `{
   "block": "warning",
   "content": [
       { "block": "text", "mods": { "size": "l" } },
       { "block": "button", "mods": { "size": "xl" } }
   ]
-}
-`;
+}`;
 
-const incorrectJson = `
-{
+const incorrectJson = `{
   "block": "warning",
   "content": [
       { "block": "text", "mods": { "size": "l" } },
       { "block": "button", "mods": { "size": "s" } }
   ]
-}
-`;
+}`;
 
-it('WARNING.INVALID_BUTTON_SIZE rule should passed', () => {
-  const linter = new Linter();
-
-  expect(linter.lint(correctJson)).toEqual([]);
-});
-
-it('WARNING.INVALID_BUTTON_SIZE rule should failed', () => {
-  const linter = new Linter();
-
-  const expectedResult = [
-    {
-      code: 'WARNING.INVALID_BUTTON_SIZE',
-      error: 'Размер кнопки блока warning должен быть на 1 шаг больше эталонного',
-      location: {
-        start: { column: 1, line: 1 },
-        end: { column: 2, line: 7 },
-      },
+describe('Lint: WARNING.INVALID_BUTTON_SIZE', () => {
+  const config = {
+    name: 'modGrowthCheckRule',
+    config: {
+      entryPoint: 'warning',
+      block: 'button',
+      standard: 'text',
+      mod: 'size',
+      modValues: ['xxxs', 'xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl', 'xxxxl', 'xxxxxl'],
+      errorCode: 'WARNING.INVALID_BUTTON_SIZE',
+      errorText: 'Size of button in warning block should be one step larger than standard',
     },
-  ];
+  };
 
-  expect(linter.lint(incorrectJson)).toEqual(expectedResult);
+  it('Rule should pass', () => {
+    const linter = new Linter([config]);
+
+    expect(linter.lint(correctJson)).toEqual([]);
+  });
+
+  it('Rule should failed', () => {
+    const linter = new Linter([config]);
+
+    const expectedResult = [
+      {
+        code: 'WARNING.INVALID_BUTTON_SIZE',
+        error: 'Size of button in warning block should be one step larger than standard',
+        location: {
+          start: { column: 1, line: 1 },
+          end: { column: 2, line: 7 },
+        },
+      },
+    ];
+
+    expect(linter.lint(incorrectJson)).toEqual(expectedResult);
+  });
 });

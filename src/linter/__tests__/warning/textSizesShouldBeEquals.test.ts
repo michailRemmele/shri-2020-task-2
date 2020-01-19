@@ -28,13 +28,13 @@ describe('Lint: WARNING.TEXT_SIZES_SHOULD_BE_EQUAL', () => {
     },
   };
 
-  it('rule should pass', () => {
+  it('Rule should pass', () => {
     const linter = new Linter([config]);
 
     expect(linter.lint(correctJson)).toEqual([]);
   });
 
-  it('rule should fail', () => {
+  it('Rule should fail', () => {
     const linter = new Linter([config]);
 
     const expectedResult = [
