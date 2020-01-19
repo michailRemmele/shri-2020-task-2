@@ -81,7 +81,7 @@ export default class TreeExplorer {
   enter(ast: AST): void {
     const root: BemEntity = {
       name: '_root',
-      elemMods: {},
+      mods: {},
       mix: [],
       location: new Location(ast.loc),
     };

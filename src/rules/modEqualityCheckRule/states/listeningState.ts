@@ -26,12 +26,12 @@ export default class ListeningState implements State {
       return [];
     }
 
-    if (!target.elemMods[mod]) {
+    if (!target.mods[mod]) {
       this._rule.abort();
       return [this._rule.generateError()];
     }
 
-    this._context.modValue = target.elemMods[mod];
+    this._context.modValue = target.mods[mod];
     this._rule.changeState('validation');
 
     return [];

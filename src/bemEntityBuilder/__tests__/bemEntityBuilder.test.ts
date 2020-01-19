@@ -22,7 +22,7 @@ describe('Bem entity builder', () => {
 
     const expectedResult: BemEntity = {
       name: '',
-      elemMods: {},
+      mods: {},
       mix: [],
       location: new Location(astLocation),
     };
@@ -61,8 +61,8 @@ describe('Bem entity builder', () => {
           type: 'Property',
           key: {
             type: 'Identifier',
-            value: 'elemMods',
-            raw: '"elemMods"',
+            value: 'mods',
+            raw: '"mods"',
             loc: astLocation,
           },
           value: {
@@ -111,7 +111,7 @@ describe('Bem entity builder', () => {
 
     const expectedResult: BemEntity = {
       name: 'hello-world',
-      elemMods: {
+      mods: {
         'vertical-align': 'center',
         'space-a': 'xxl',
       },
@@ -187,11 +187,11 @@ describe('Bem entity builder', () => {
 
     const expectedResult: BemEntity = {
       name: 'hello__world',
-      elemMods: {},
+      mods: {},
       mix: [
         {
           name: '',
-          elemMods: {},
+          mods: {},
           mix: [],
           location: new Location(astLocation),
         },
@@ -259,7 +259,7 @@ describe('Bem entity builder', () => {
 
     const expectedResult: BemEntity = {
       name: 'hello',
-      elemMods: {},
+      mods: {},
       mix: [],
       content: astArray,
       location: new Location(astLocation),

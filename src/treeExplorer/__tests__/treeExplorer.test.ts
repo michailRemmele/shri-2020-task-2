@@ -31,7 +31,7 @@ describe('Tree explorer', () => {
   const getEvent = (type, block, content?): Event => {
     const entity = {
       name: block,
-      elemMods: {},
+      mods: {},
       mix: [],
       location,
       ...(content ? { content } : {}),

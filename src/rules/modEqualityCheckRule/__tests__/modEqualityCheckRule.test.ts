@@ -23,7 +23,7 @@ describe('Mod equality check rule', () => {
   const getEvent = (type, block, mod?, modValue?, loc?): Event => {
     const entity = {
       name: block,
-      elemMods: {
+      mods: {
         ...(mod ? { [mod]: modValue } : {}),
       },
       mix: [],
