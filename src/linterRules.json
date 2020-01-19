@@ -52,5 +52,19 @@
       "errorCode": "TEXT.SEVERAL_H1",
       "errorText": "H1 should be uniqueness"
     }
+  },
+  {
+    "name": "groupProportionsCheckRule",
+    "config": {
+      "entryPoint": "grid",
+      "block": "grid",
+      "blockSizeMod": "m-columns",
+      "maxAllowedBlockPart": 0.5,
+      "group": ["commercial", "offer"],
+      "fraction": "grid__fraction",
+      "fractionSizeMod": "m-col",
+      "errorCode": "GRID.TOO_MUCH_MARKETING_BLOCKS",
+      "errorText": "Marketing blocks takes more than half from all grid columns"
+    }
   }
 ]
