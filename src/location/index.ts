@@ -6,26 +6,18 @@ export interface LocationPoint {
 }
 
 export default class Location {
-  private readonly _start: LocationPoint;
-  private readonly _end: LocationPoint;
+  public readonly start: LocationPoint;
+  public readonly end: LocationPoint;
 
   constructor(astLocation: ASTLocation) {
-    this._start = {
+    this.start = {
       column: astLocation.start.column,
       line: astLocation.start.line,
     };
-    this._end = {
+    this.end = {
       column: astLocation.end.column,
       line: astLocation.end.line,
     };
-  }
-
-  get start(): LocationPoint {
-    return this._start;
-  }
-
-  get end(): LocationPoint {
-    return this._end;
   }
 
   _pointEquals(arg1: LocationPoint, arg2: LocationPoint): boolean {
@@ -33,7 +25,7 @@ export default class Location {
   }
 
   equals(location: Location): boolean {
-    return this._pointEquals(this._start, location.start)
-      && this._pointEquals(this._end, location.end);
+    return this._pointEquals(this.start, location.start)
+      && this._pointEquals(this.end, location.end);
   }
 }
