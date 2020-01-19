@@ -30,29 +30,32 @@ export default class RuleBox implements TreeExplorerListener {
       throw new Error(`No rule found with this name: ${name}`);
     }
 
-    this._rules[config.entryPoint] = {
+    this._rules[config.entryPoint] = this._rules[config.entryPoint] || [];
+    this._rules[config.entryPoint].push({
       RuleImpl: rules[name],
       config,
-    };
+    });
   }
 
   getErrors(): RuleError[] {
     return this._errors;
   }
 
-  clearError(): void {
+  clearErrors(): void {
     this._errors = [];
   }
 
   update(event: Event): void {
     if (this._rules[event.target.name] && event.type === 'enter') {
-      const { RuleImpl, config } = this._rules[event.target.name];
-      const context: Context = {
-        ...config,
-        entryPointLoc: event.target.location,
-      };
+      this._rules[event.target.name].forEach((entry) => {
+        const { RuleImpl, config } = entry;
+        const context: Context = {
+          ...config,
+          entryPointLoc: event.target.location,
+        };
 
-      this._activeRules.push(new RuleImpl(context));
+        this._activeRules.push(new RuleImpl(context));
+      });
     }
 
     this._activeRules = this._activeRules.filter((rule: Rule) => {

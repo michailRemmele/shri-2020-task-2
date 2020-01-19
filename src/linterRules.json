@@ -28,7 +28,7 @@
       "block": "button",
       "after": "placeholder",
       "errorCode": "WARNING.INVALID_BUTTON_POSITION",
-      "errorText": "Button in warning block can\\'t be before than placeholder"
+      "errorText": "Button in warning block can't be before than placeholder"
     }
   },
   {
