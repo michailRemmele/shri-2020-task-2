@@ -24,6 +24,8 @@ export default class Linter {
     const ast = this._astBuilder.build(json);
     this._treeExplorer.enter(ast);
 
-    return this._ruleBox.getErrors();
+    const errors = this._ruleBox.getErrors();
+    this._ruleBox.clearErrors();
+    return errors;
   }
 }
