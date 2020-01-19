@@ -29,9 +29,11 @@ module.exports = {
   resolve: {
     extensions: ['.ts'],
     modules: [
-      'src',
       'node_modules',
     ],
+    alias: {
+      src: paths.src,
+    },
   },
 
   module: {
