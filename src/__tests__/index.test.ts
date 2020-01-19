@@ -201,19 +201,19 @@ describe('Lint main function', () => {
 
     expect(lint(invalidH3Position)).toEqual(expectedResult);
   });
-});
 
-it('GRID.TOO_MUCH_MARKETING_BLOCKS', () => {
-  const expectedResult = [
-    {
-      code: 'GRID.TOO_MUCH_MARKETING_BLOCKS',
-      error: 'Marketing blocks takes more than half from all grid columns',
-      location: {
-        start: { column: 1, line: 1 },
-        end: { column: 2, line: 32 },
+  it('GRID.TOO_MUCH_MARKETING_BLOCKS', () => {
+    const expectedResult = [
+      {
+        code: 'GRID.TOO_MUCH_MARKETING_BLOCKS',
+        error: 'Marketing blocks takes more than half from all grid columns',
+        location: {
+          start: { column: 1, line: 1 },
+          end: { column: 2, line: 32 },
+        },
       },
-    },
-  ];
+    ];
 
-  expect(lint(tooMuchMarketingBlocks)).toEqual(expectedResult);
+    expect(lint(tooMuchMarketingBlocks)).toEqual(expectedResult);
+  });
 });

@@ -3,4 +3,7 @@ module.exports = {
   modulePaths: [
     '<rootDir>',
   ],
+  globals: {
+    globalThis: {},
+  },
 };

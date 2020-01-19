@@ -5,8 +5,8 @@ import linterRules from './linterRules.json';
 
 const linter = new Linter(linterRules);
 
-function lint(json: string): Error[] {
+globalThis.lint = function lint(json: string): Error[] {
   return linter.lint(json);
-}
+};
 
-export default lint;
+export default globalThis.lint;
