@@ -1,0 +1,12 @@
+[
+  {
+    "name": "modEqualityCheckRule",
+    "config": {
+      "entryPoint": "warning",
+      "block": "text",
+      "mod": "size",
+      "errorCode": "WARNING.TEXT_SIZES_SHOULD_BE_EQUAL",
+      "errorText": "Texts sizes in warning block should be equals"
+    }
+  }
+]
