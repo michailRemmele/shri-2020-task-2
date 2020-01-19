@@ -18,6 +18,7 @@ describe('Mod equality check rule', () => {
     errorCode: 'WARNING.TEXT_SIZES_SHOULD_BE_EQUAL',
     errorText: 'Texts sizes in warning block should be equals',
     mod: 'size',
+    modValues: ['xxxs', 'xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl', 'xxxxl', 'xxxxxl'],
   };
 
   const getEvent = (type, block, mod?, modValue?, loc?): Event => {
