@@ -1,4 +1,5 @@
-import Linter, { Error } from './linter/linter';
+import { Error } from 'src/rules/rule';
+import Linter from './linter/linter';
 
 const linter = new Linter();
 

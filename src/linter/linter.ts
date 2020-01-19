@@ -1,3 +1,4 @@
+import { Error } from 'src/rules/rule';
 import ASTBuilder from '../astBuilder/astBuilder';
 import TreeExplorer from '../treeExplorer/treeExplorer';
 
