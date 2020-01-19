@@ -15,9 +15,9 @@ export default class ValidationState implements State {
     const {
       block, mod, modValue, entryPoint, entryPointLoc,
     } = this._context;
-    const { type, target } = event;
+    const { type, target, original } = event;
 
-    if (target.name === entryPoint && target.location.equals(entryPointLoc) && type === 'leave') {
+    if (target.name === entryPoint && original.location.equals(entryPointLoc) && type === 'leave') {
       this._rule.abort();
       return [];
     }
