@@ -1,4 +1,4 @@
-import { Error } from 'src/rules/rule';
+import { Error as RuleError } from 'src/rules/rule';
 import ASTBuilder from 'src/astBuilder/astBuilder';
 import TreeExplorer from 'src/treeExplorer/treeExplorer';
 import RuleBox, { RuleConfig } from 'src/ruleBox/ruleBox';
@@ -20,12 +20,19 @@ export default class Linter {
     this._treeExplorer.addListener(this._ruleBox);
   }
 
-  lint(json: string): Error[] {
-    const ast = this._astBuilder.build(json);
-    this._treeExplorer.enter(ast);
+  lint(json: string): RuleError[] {
+    let errors = [];
 
-    const errors = this._ruleBox.getErrors();
-    this._ruleBox.clearErrors();
+    try {
+      const ast = this._astBuilder.build(json);
+      this._treeExplorer.enter(ast);
+
+      errors = this._ruleBox.getErrors();
+      this._ruleBox.clearErrors();
+    } catch (e) {
+      throw new Error('Error while linting json string');
+    }
+
     return errors;
   }
 }
