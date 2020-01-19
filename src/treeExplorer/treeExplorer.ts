@@ -7,6 +7,8 @@ import Location from 'src/location';
 export interface Event {
   type: 'enter' | 'leave';
   target: BemEntity;
+  isMix: boolean;
+  original: BemEntity;
 }
 
 export interface TreeExplorerListener {
@@ -22,9 +24,27 @@ export default class TreeExplorer {
     this._listeners = [];
   }
 
-  _fireEvent(event: Event): void {
+  _notifyListeners(event): void {
     this._listeners.forEach((listener) => {
       listener.update(event);
+    });
+  }
+
+  _fireEvent(type, target): void {
+    this._notifyListeners({
+      type,
+      target,
+      original: target,
+      isMix: false,
+    });
+
+    target.mix.forEach((mixedEntity: BemEntity) => {
+      this._notifyListeners({
+        type,
+        target: mixedEntity,
+        original: target,
+        isMix: true,
+      });
     });
   }
 
@@ -37,13 +57,11 @@ export default class TreeExplorer {
       Object: (astObject: ASTObject): void => {
         const bemEntity = this._bemEntityBuilder.build(astObject);
 
-        this._fireEvent({ type: 'enter', target: bemEntity });
-
+        this._fireEvent('enter', bemEntity);
         if (bemEntity.content) {
           this._enter(bemEntity.content);
         }
-
-        this._fireEvent({ type: 'leave', target: bemEntity });
+        this._fireEvent('leave', bemEntity);
       },
       Array: (astArray: ASTArray): void => {
         astArray.children.forEach((child: AST) => {
@@ -68,8 +86,8 @@ export default class TreeExplorer {
       location: new Location(ast.loc),
     };
 
-    this._fireEvent({ type: 'enter', target: root });
+    this._fireEvent('enter', root);
     this._enter(ast);
-    this._fireEvent({ type: 'leave', target: root });
+    this._fireEvent('leave', root);
   }
 }

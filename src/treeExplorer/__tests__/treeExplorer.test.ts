@@ -1,7 +1,6 @@
 import {
   ASTLocation, ASTObject,
 } from 'src/astBuilder/astBuilder';
-import { BemEntity } from 'src/bemEntityBuilder/bemEntityBuilder';
 import Location from 'src/location';
 import TreeExplorer, { TreeExplorerListener, Event } from '../treeExplorer';
 
@@ -29,11 +28,21 @@ describe('Tree explorer', () => {
   };
   const location = new Location(astLocation);
 
-  const root = {
-    name: '_root',
-    elemMods: {},
-    mix: [],
-    location,
+  const getEvent = (type, block, content?): Event => {
+    const entity = {
+      name: block,
+      elemMods: {},
+      mix: [],
+      location,
+      ...(content ? { content } : {}),
+    };
+
+    return {
+      type,
+      target: entity,
+      original: entity,
+      isMix: false,
+    };
   };
 
   it('Should enter and leave root and hello-world', () => {
@@ -65,29 +74,11 @@ describe('Tree explorer', () => {
       loc: astLocation,
     };
 
-    const target: BemEntity = {
-      name: 'hello-world',
-      elemMods: {},
-      mix: [],
-      location,
-    };
     const expectedResult: Event[] = [
-      {
-        type: 'enter',
-        target: root,
-      },
-      {
-        type: 'enter',
-        target,
-      },
-      {
-        type: 'leave',
-        target,
-      },
-      {
-        type: 'leave',
-        target: root,
-      },
+      getEvent('enter', '_root'),
+      getEvent('enter', 'hello-world'),
+      getEvent('leave', 'hello-world'),
+      getEvent('leave', '_root'),
     ];
 
     tree.enter(astObject);
@@ -173,44 +164,13 @@ describe('Tree explorer', () => {
       loc: astLocation,
     };
 
-    const target: BemEntity = {
-      name: 'hello-world',
-      elemMods: {},
-      mix: [],
-      content: childAstObject,
-      location,
-    };
-    const targetChild: BemEntity = {
-      name: 'hello-world__child',
-      elemMods: {},
-      mix: [],
-      location,
-    };
     const expectedResult: Event[] = [
-      {
-        type: 'enter',
-        target: root,
-      },
-      {
-        type: 'enter',
-        target,
-      },
-      {
-        type: 'enter',
-        target: targetChild,
-      },
-      {
-        type: 'leave',
-        target: targetChild,
-      },
-      {
-        type: 'leave',
-        target,
-      },
-      {
-        type: 'leave',
-        target: root,
-      },
+      getEvent('enter', '_root'),
+      getEvent('enter', 'hello-world', childAstObject),
+      getEvent('enter', 'hello-world__child'),
+      getEvent('leave', 'hello-world__child'),
+      getEvent('leave', 'hello-world', childAstObject),
+      getEvent('leave', '_root'),
     ];
 
     tree.enter(astObject);

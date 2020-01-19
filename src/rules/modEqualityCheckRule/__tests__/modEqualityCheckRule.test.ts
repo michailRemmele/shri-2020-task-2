@@ -20,17 +20,23 @@ describe('Mod equality check rule', () => {
     mod: 'size',
   };
 
-  const getEvent = (type, block, mod?, modValue?, loc?): Event => ({
-    type,
-    target: {
+  const getEvent = (type, block, mod?, modValue?, loc?): Event => {
+    const entity = {
       name: block,
       elemMods: {
         ...(mod ? { [mod]: modValue } : {}),
       },
       mix: [],
       location: loc || location,
-    },
-  });
+    };
+
+    return {
+      type,
+      target: entity,
+      original: entity,
+      isMix: false,
+    };
+  };
 
   it('Should pass without errors: no text', () => {
     const rule = new Rule(context);
