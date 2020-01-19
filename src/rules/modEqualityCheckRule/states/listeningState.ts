@@ -13,7 +13,7 @@ export default class ListeningState implements State {
 
   process(event: Event): Error[] {
     const {
-      block, mod, entryPoint, entryPointLoc,
+      block, mod, modValues, entryPoint, entryPointLoc,
     } = this._context;
     const { type, target, original } = event;
 
@@ -26,7 +26,7 @@ export default class ListeningState implements State {
       return [];
     }
 
-    if (!target.mods[mod]) {
+    if (!target.mods[mod] || !modValues.includes(target.mods[mod])) {
       this._rule.abort();
       return [this._rule.generateError()];
     }

@@ -23,6 +23,7 @@ describe('Lint: WARNING.TEXT_SIZES_SHOULD_BE_EQUAL', () => {
       entryPoint: 'warning',
       block: 'text',
       mod: 'size',
+      modValues: ['xxxs', 'xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl', 'xxxxl', 'xxxxxl'],
       errorCode: 'WARNING.TEXT_SIZES_SHOULD_BE_EQUAL',
       errorText: 'Texts sizes in warning block should be equals',
     },

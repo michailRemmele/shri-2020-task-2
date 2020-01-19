@@ -12,6 +12,7 @@ export default class ModEqualityCheckRule extends Rule {
     super(context);
 
     this.context.mod = context.mod;
+    this.context.modValues = context.modValues;
     this.states = states;
     this.state = new ListeningState(this, this.context);
   }
