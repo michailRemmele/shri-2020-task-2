@@ -19,7 +19,7 @@ export default class AccumulationState implements State {
 
     if (target.name === entryPoint && original.location.equals(entryPointLoc) && type === 'leave') {
       this._rule.abort();
-      return accumulatedDebt.map((entity) => this._rule.generateError({ entity }));
+      return [];
     }
 
     if (target.name === block && type === 'enter') {
