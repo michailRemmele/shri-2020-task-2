@@ -3,14 +3,14 @@ import Linter from '../../linter';
 const correctJson = `{
   "block": "warning",
   "content": [
-      { "block": "placeholder", "mods": { "size": "m" }
+      { "block": "placeholder", "mods": { "size": "m" } }
   ]
 }`;
 
 const incorrectJson = `{
   "block": "warning",
   "content": [
-      { "block": "placeholder", "mods": { "size": "xl" }
+      { "block": "placeholder", "mods": { "size": "xl" } }
   ]
 }`;
 
@@ -41,8 +41,8 @@ describe('Lint: WARNING.INVALID_PLACEHOLDER_SIZE', () => {
         code: 'WARNING.INVALID_PLACEHOLDER_SIZE',
         error: 'Allowed sizes of placeholder block in warning block: s, m, l',
         location: {
-          start: { column: 1, line: 1 },
-          end: { column: 2, line: 6 },
+          start: { column: 7, line: 4 },
+          end: { column: 59, line: 4 },
         },
       },
     ];

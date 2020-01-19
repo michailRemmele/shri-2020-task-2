@@ -42,8 +42,8 @@ describe('Lint: WARNING.INVALID_BUTTON_POSITION', () => {
         code: 'WARNING.INVALID_BUTTON_POSITION',
         error: 'Button in warning block can\'t be before than placeholder',
         location: {
-          start: { column: 1, line: 1 },
-          end: { column: 2, line: 7 },
+          start: { column: 7, line: 4 },
+          end: { column: 53, line: 4 },
         },
       },
     ];
