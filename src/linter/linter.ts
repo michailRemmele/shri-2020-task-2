@@ -21,6 +21,10 @@ export default class Linter {
   }
 
   lint(json: string): RuleError[] {
+    if (typeof json !== 'string') {
+      return [];
+    }
+
     let errors = [];
 
     try {
