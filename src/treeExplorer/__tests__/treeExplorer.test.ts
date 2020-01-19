@@ -1,7 +1,7 @@
 import {
   ASTLocation, ASTObject,
 } from 'src/astBuilder/astBuilder';
-import { BemEntity } from 'src/bemEntityBuilder/bemEntityBuilder';
+import Location from 'src/location';
 import TreeExplorer, { TreeExplorerListener, Event } from '../treeExplorer';
 
 class SimpleListener implements TreeExplorerListener {
@@ -21,17 +21,36 @@ class SimpleListener implements TreeExplorerListener {
 }
 
 describe('Tree explorer', () => {
-  it('Should generate two events for one target', () => {
+  const astLocation: ASTLocation = {
+    start: { line: 0, column: 0, offset: 0 },
+    end: { line: 0, column: 0, offset: 0 },
+    source: null,
+  };
+  const location = new Location(astLocation);
+
+  const getEvent = (type, block, content?): Event => {
+    const entity = {
+      name: block,
+      elemMods: {},
+      mix: [],
+      location,
+      ...(content ? { content } : {}),
+    };
+
+    return {
+      type,
+      target: entity,
+      original: entity,
+      isMix: false,
+    };
+  };
+
+  it('Should enter and leave root and hello-world', () => {
     const tree = new TreeExplorer();
     const simpleListener = new SimpleListener();
 
     tree.addListener(simpleListener);
 
-    const astLocation: ASTLocation = {
-      start: { line: 0, column: 0, offset: 0 },
-      end: { line: 0, column: 0, offset: 0 },
-      source: null,
-    };
     const astObject: ASTObject = {
       type: 'Object',
       children: [
@@ -55,21 +74,11 @@ describe('Tree explorer', () => {
       loc: astLocation,
     };
 
-    const target: BemEntity = {
-      name: 'hello-world',
-      elemMods: {},
-      mix: [],
-      location: astLocation,
-    };
     const expectedResult: Event[] = [
-      {
-        type: 'enter',
-        target,
-      },
-      {
-        type: 'leave',
-        target,
-      },
+      getEvent('enter', '_root'),
+      getEvent('enter', 'hello-world'),
+      getEvent('leave', 'hello-world'),
+      getEvent('leave', '_root'),
     ];
 
     tree.enter(astObject);
@@ -83,11 +92,6 @@ describe('Tree explorer', () => {
 
     tree.addListener(simpleListener);
 
-    const astLocation: ASTLocation = {
-      start: { line: 0, column: 0, offset: 0 },
-      end: { line: 0, column: 0, offset: 0 },
-      source: null,
-    };
     const childAstObject: ASTObject = {
       type: 'Object',
       children: [
@@ -160,36 +164,13 @@ describe('Tree explorer', () => {
       loc: astLocation,
     };
 
-    const target: BemEntity = {
-      name: 'hello-world',
-      elemMods: {},
-      mix: [],
-      content: childAstObject,
-      location: astLocation,
-    };
-    const targetChild: BemEntity = {
-      name: 'hello-world__child',
-      elemMods: {},
-      mix: [],
-      location: astLocation,
-    };
     const expectedResult: Event[] = [
-      {
-        type: 'enter',
-        target,
-      },
-      {
-        type: 'enter',
-        target: targetChild,
-      },
-      {
-        type: 'leave',
-        target: targetChild,
-      },
-      {
-        type: 'leave',
-        target,
-      },
+      getEvent('enter', '_root'),
+      getEvent('enter', 'hello-world', childAstObject),
+      getEvent('enter', 'hello-world__child'),
+      getEvent('leave', 'hello-world__child'),
+      getEvent('leave', 'hello-world', childAstObject),
+      getEvent('leave', '_root'),
     ];
 
     tree.enter(astObject);
