@@ -8,5 +8,3 @@ const linter = new Linter(linterRules);
 globalThis.lint = function lint(json: string): Error[] {
   return linter.lint(json);
 };
-
-export default globalThis.lint;
